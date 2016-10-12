@@ -121,7 +121,7 @@ public class View3DController{
 
         this.setCameraPositionAlphaAngle(0);
         this.setCameraPositionBetaAngle(0);
-        this.setCameraZoom(900);
+        this.setCameraZoom(500);
 
         camera.setNearClip(0);
         camera.setFarClip(1000);

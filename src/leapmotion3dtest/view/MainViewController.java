@@ -38,6 +38,9 @@ public class MainViewController implements Initializable {
         view3DController.cameraPositionBetaAngle.bindBidirectional(cameraPositionSlider2.valueProperty());
         view3DController.cameraZoom.bindBidirectional(cameraZoomSlider.valueProperty());
 
+        //Setting default comfortable view param
+        view3DController.cameraZoom.set(1000);
+        view3DController.cameraPositionBetaAngle.set(15);
     }
 
 }
