@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="LeapJava" level="project" />
+    <orderEntry type="library" name="org.apache.commons:commons-math:2.2" level="project" />
   </component>
 </module>

@@ -25,7 +25,6 @@ public class MainViewController implements Initializable {
     @FXML private Slider cameraZoomSlider;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

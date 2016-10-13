@@ -38,6 +38,7 @@ public class View3DController{
 
     public HandView rightHand;
     public HandView leftHand;
+    public WayView way;
 
     private SubScene subScene;
 
@@ -77,6 +78,8 @@ public class View3DController{
 
         // Add the Shapes and the Light to the Group
         root = new Group();
+
+        way = new WayView(root);
 
         initAxis();
         initLight();

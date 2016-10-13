@@ -18,12 +18,19 @@ public class LeapMotionListener extends Listener {
 
     private View3DController view3d;
 
+    private LineListener lineListener;
+
+    private boolean rightIndexAndTumbClipped;
+
     //endregion
 
     //region Constructor
 
     public LeapMotionListener(View3DController view3d){
         this.view3d = view3d;
+
+        this.rightIndexAndTumbClipped = false;
+        this.lineListener = new LineListener(LineListener.HandSide.Right, Finger.Type.TYPE_INDEX);
     }
 
     //endregion
@@ -47,6 +54,8 @@ public class LeapMotionListener extends Listener {
         Hand handRight = controller.frame().hands().rightmost();
         Hand handLeft = controller.frame().hands().leftmost();
 
+        Finger indexRight = handRight.fingers().fingerType(Finger.Type.TYPE_INDEX).get(0);
+        Finger thumbRight = handRight.fingers().fingerType(Finger.Type.TYPE_THUMB).get(0);
 
         Platform.runLater(() -> {
 
@@ -58,31 +67,32 @@ public class LeapMotionListener extends Listener {
                 view3d.leftHand.setHandsPosition(handLeft);
             }
 
-            //Test index and thumb touch
-            Finger index = handRight.fingers().fingerType(Finger.Type.TYPE_INDEX).get(0);
-            Finger thumb = handRight.fingers().fingerType(Finger.Type.TYPE_THUMB).get(0);
+            checkedClippedStatus(controller);
 
-            if((new Point3D(index.tipPosition().getX(),
-                            index.tipPosition().getY(),
-                            index.tipPosition().getZ())).distance(
-                    thumb.tipPosition().getX(),
-                    thumb.tipPosition().getY(),
-                    thumb.tipPosition().getZ()) <= INDEX_THUMB_TOUCH){
-                System.out.println("TOUCH");
-            }else{
-                System.out.println("NOT TOUCH");
+            if(rightIndexAndTumbClipped){
+                view3d.way.addWayPoint(
+                        indexRight.stabilizedTipPosition().getX(),
+                        -1 * indexRight.stabilizedTipPosition().getY(),
+                        -1 * indexRight.stabilizedTipPosition().getZ());
+
             }
-
-            System.out.println("Distance : " +
-            (new Point3D(index.tipPosition().getX(),
-                    index.tipPosition().getY(),
-                    index.tipPosition().getZ())).distance(
-                    thumb.tipPosition().getX(),
-                    thumb.tipPosition().getY(),
-                    thumb.tipPosition().getZ()));
-
         });
 
+    }
+
+    private void checkedClippedStatus(Controller controller){
+
+        Hand handRight = controller.frame().hands().rightmost();
+        Hand handLeft = controller.frame().hands().leftmost();
+
+        //Test index and thumb touch
+        Finger indexRight = handRight.fingers().fingerType(Finger.Type.TYPE_INDEX).get(0);
+        Finger thumbRight = handRight.fingers().fingerType(Finger.Type.TYPE_THUMB).get(0);
+
+        Point3D indexTipPos = new Point3D(indexRight.tipPosition().getX(), indexRight.tipPosition().getY(), indexRight.tipPosition().getZ());
+        Point3D thumbTipPos = new Point3D(thumbRight.tipPosition().getX(), thumbRight.tipPosition().getY(), thumbRight.tipPosition().getZ());
+
+        rightIndexAndTumbClipped = indexTipPos.distance(thumbTipPos) <= INDEX_THUMB_TOUCH;
     }
 
     //endregion
