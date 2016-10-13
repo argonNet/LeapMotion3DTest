@@ -30,10 +30,7 @@ public class Main extends Application {
 
         // Create a sample listener and assign it to a controller to receive events
         listener = new LeapMotionListener(((MainViewController)mainViewLoader.getController()).view3DController);
-
         controller = new Controller(listener);
-
-
     }
 
 

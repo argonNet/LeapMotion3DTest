@@ -76,8 +76,14 @@ public class LineListener extends Listener{
             }
         }
 
-        private void checkLine(){
+        public void clearFrames(){
+            point3DList.clear();
+            regression.clear();
+        }
+
+        public void checkLine(){
             System.out.println("Slope : " + regression.getSlope());
+            System.out.println("Error : " + regression.getR());
         }
         //endregion
 

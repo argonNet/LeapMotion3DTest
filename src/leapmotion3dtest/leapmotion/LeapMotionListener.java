@@ -72,9 +72,10 @@ public class LeapMotionListener extends Listener {
             if(rightIndexAndTumbClipped){
                 view3d.way.addWayPoint(
                         indexRight.stabilizedTipPosition().getX(),
-                        -1 * indexRight.stabilizedTipPosition().getY(),
-                        -1 * indexRight.stabilizedTipPosition().getZ());
+                        indexRight.stabilizedTipPosition().getY(),
+                        indexRight.stabilizedTipPosition().getZ());
 
+                lineListener.registerFrame(controller.frame());
             }
         });
 
@@ -92,7 +93,27 @@ public class LeapMotionListener extends Listener {
         Point3D indexTipPos = new Point3D(indexRight.tipPosition().getX(), indexRight.tipPosition().getY(), indexRight.tipPosition().getZ());
         Point3D thumbTipPos = new Point3D(thumbRight.tipPosition().getX(), thumbRight.tipPosition().getY(), thumbRight.tipPosition().getZ());
 
-        rightIndexAndTumbClipped = indexTipPos.distance(thumbTipPos) <= INDEX_THUMB_TOUCH;
+        boolean previousRightIndexAndTumbClipped = rightIndexAndTumbClipped;
+        rightIndexAndTumbClipped = indexRight.isValid() && thumbRight.isValid() && indexTipPos.distance(thumbTipPos) <= INDEX_THUMB_TOUCH;
+
+        if(!previousRightIndexAndTumbClipped && rightIndexAndTumbClipped){
+            //Start clipping
+            System.out.println("Start Clipping ...");
+            startClipping();
+        }else if(previousRightIndexAndTumbClipped && !rightIndexAndTumbClipped){
+            //Stop clipping
+            System.out.println("Stop Clipping ...");
+            stopClipping();
+        }
+    }
+
+
+    private void startClipping(){
+        lineListener.clearFrames();
+    }
+
+    private void stopClipping(){
+        lineListener.checkLine();
     }
 
     //endregion
