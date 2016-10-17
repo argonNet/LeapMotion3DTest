@@ -8,7 +8,7 @@ import javafx.scene.transform.Translate;
 /**
  * Created by Argon on 13.10.16.
  */
-public class view3DHelper {
+public class View3DHelper {
 
     //region Constants / Variables
     //endregion
