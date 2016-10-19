@@ -66,6 +66,9 @@ public class LineListener extends Listener{
                 regression.addData(
                         finger.stabilizedTipPosition().getX(),
                         finger.stabilizedTipPosition().getY());
+
+                System.out.println("Velocity : " + finger.tipVelocity().getX());
+
             }
 
             if(point3DList.size() >= WAY_LENGTH){
