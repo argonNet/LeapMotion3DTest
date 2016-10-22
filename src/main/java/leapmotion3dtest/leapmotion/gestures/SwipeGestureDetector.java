@@ -33,8 +33,8 @@ public class SwipeGestureDetector implements IGestureDetector {
         Right
     }
 
-    private final static int GESTURE_LENGTH = 20;
-    private final static int MIN_GESTURE_VELOCITY_X_FRAME_DECTECTION = 200;
+    private final static int GESTURE_LENGTH = 15;
+    private final static int MIN_GESTURE_VELOCITY_X_FRAME_DECTECTION = 500;
     private final static int MAX_GESTURE_VELOCITY_X_VALIDATION = 1000;
     private final static double MIN_R = 0.5;
     private final static double MIN_SLOPE  = 0.5;
