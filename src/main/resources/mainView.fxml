@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.SubScene?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="696.0" prefWidth="955.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="leapmotion3dtest.view.MainViewController">
+   <children>
+      <SplitPane dividerPositions="0.7" prefHeight="696.0" prefWidth="955.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane fx:id="anchorPaneFor3DZone" minHeight="0.0" minWidth="0.0" prefHeight="694.0" prefWidth="675.0">
+               <children>
+                  <SubScene fx:id="view3D" height="511.0" width="535.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="0.0">
+                    <root>
+                      <Region />
+                    </root>
+                  </SubScene>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="694.0" prefWidth="403.0">
+               <children>
+                  <Accordion prefHeight="696.0" prefWidth="276.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <panes>
+                      <TitledPane animated="false" text="Camera Position">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Slider fx:id="cameraPositionSlider1" blockIncrement="1.0" layoutX="14.0" layoutY="31.0" max="360.0" prefHeight="16.0" prefWidth="174.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                                    <Label layoutX="14.0" layoutY="14.0" text="Position 1 : " AnchorPane.leftAnchor="10.0" />
+                                    <Label layoutX="20.0" layoutY="71.0" text="Position 2 : " AnchorPane.leftAnchor="10.0" />
+                                    <Slider fx:id="cameraPositionSlider2" blockIncrement="1.0" layoutX="15.0" layoutY="88.0" max="360.0" prefHeight="16.0" prefWidth="163.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                                    <Slider fx:id="cameraZoomSlider" blockIncrement="1.0" layoutX="21.0" layoutY="134.0" max="1500.0" min="500.0" value="500.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                                    <Label layoutX="21.0" layoutY="117.0" text="Zoom :" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="Display Settings">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <CheckBox fx:id="cbxDisplayFingers" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Fingers" />
+                                    <CheckBox fx:id="cbxDisplayPalm" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" text="Palm" />
+                                    <CheckBox fx:id="cbxDisplayInteractionBox" layoutX="14.0" layoutY="69.0" mnemonicParsing="false" text="Interaction box" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" prefHeight="642.0" prefWidth="227.0" text="Monitoring">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <CheckBox fx:id="cbxActivateMonitoring" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Activate monitoring" />
+                                    <TextArea fx:id="txtMonitoringBox" editable="false" layoutX="34.4" layoutY="58.4" prefHeight="511.0" prefWidth="234.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="48.0">
+                                       <font>
+                                          <Font name="Courier New" size="12.0" />
+                                       </font>
+                                    </TextArea>
+                                    <Spinner fx:id="spnFrameMonitor" layoutX="193.0" layoutY="10.0" prefHeight="27.0" prefWidth="69.0" />
+                                    <Button fx:id="btnClearMonitoring" layoutX="203.0" layoutY="571.0" mnemonicParsing="false" onAction="#btnClearMonitoringAction" text="Clear" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="12.0" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </TitledPane>
+                    </panes>
+                  </Accordion>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

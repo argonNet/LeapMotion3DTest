@@ -1,7 +1,7 @@
 package leapmotion3dtest.leapmotion.gestures;
 
 /**
- * Created by Argon on 22.10.16.
+ * Information about a gesture
  */
 public class GestureInformation {
 }

@@ -1,7 +1,19 @@
 package leapmotion3dtest.leapmotion.gestures;
 
 /**
- * Created by Argon on 22.10.16.
+ * Information about a swipe gesture :
+ * - Swipe direction (right or left)
  */
-public class SwipeGestureInformation {
+public class SwipeGestureInformation extends GestureInformation{
+
+    private SwipeGestureDetector.Side direction;
+
+    public SwipeGestureDetector.Side getDirection(){return direction;}
+
+    public SwipeGestureInformation(SwipeGestureDetector.Side direction){
+        this.direction = direction;
+    }
+
+
+
 }
