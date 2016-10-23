@@ -163,7 +163,7 @@ public class MainViewController implements Initializable, IMonitorListener, IGes
         if(cbxActivateGestureMonitoring.isSelected()){
             txtMonitoringBox.textProperty().setValue(
                 direction + " Swipe -> min V : " + gestureInformation.getMinVelocityDetected() +
-                " | max V : " + gestureInformation.getMaxVelocityDetected() +
+                " | max V : " + gestureInformation.getMaxVelocityDetected() + " Time : " + System.currentTimeMillis() +
                 "\n" + txtMonitoringBox.textProperty().get());
         }
 

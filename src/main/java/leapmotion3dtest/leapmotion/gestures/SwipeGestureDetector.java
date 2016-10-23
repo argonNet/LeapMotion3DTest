@@ -17,6 +17,7 @@ import java.util.List;
  * - The length of the gesture, measured in frame number,
  * - The minimum velocity on the X axis to detect frame,
  * - The maximum velocity to reach to validate the gesture,
+ * - The min time between gesture,
  * - The slope of the gesture with  the X axis,
  * - The R coefficient of the the linear regression done on the gesture (we only take care of X and Y axis)
  *
@@ -36,11 +37,13 @@ public class SwipeGestureDetector implements IGestureDetector {
     private final static int GESTURE_LENGTH = 15;
     private final static int MIN_GESTURE_VELOCITY_X_FRAME_DECTECTION = 500;
     private final static int MAX_GESTURE_VELOCITY_X_VALIDATION = 1200;
+    private final static long MIN_DELAY_BETWEEN_GESTURE_IN_MILLIS = 500;
     private final static double MIN_R = 0.5;
     private final static double MIN_SLOPE  = 0.5;
 
     private Side handSide;
 
+    private long lastGestureDetectedInMillis;
     private int frameGestureCount;
     private double xVelocityMax;
     private double xVelocityMin;
@@ -64,6 +67,7 @@ public class SwipeGestureDetector implements IGestureDetector {
         listeners = new ArrayList<>();
         xVelocityMax = 0;
         xVelocityMin = Double.MAX_VALUE;
+        lastGestureDetectedInMillis = 0;
     }
 
     //region Constructor
@@ -129,11 +133,15 @@ public class SwipeGestureDetector implements IGestureDetector {
 
                 if(frameGestureCount >= GESTURE_LENGTH && //We reach the end of the gesture
                    xVelocityMax >= MAX_GESTURE_VELOCITY_X_VALIDATION && //The max velocity is OK
+                   System.currentTimeMillis() - lastGestureDetectedInMillis > MIN_DELAY_BETWEEN_GESTURE_IN_MILLIS && //To prevent long gesture launch several Swipe event
                     (regression.getR() >= MIN_R || regression.getR() <= -1 * MIN_R) &&
                    (-1 * MIN_SLOPE <= regression.getSlope() && regression.getSlope() <= MIN_R)){
 
-//                    System.out.println("!!!! SWIPE DETECTED !!!! -> Max Velo : " + xVelocityMax);
+                    System.out.println("!!!! SWIPE DETECTED !!!! -> Time " + System.currentTimeMillis() );
 //                    System.out.println("Slope : " + regression.getSlope());
+
+                    //Register time the gesture was detected
+                    lastGestureDetectedInMillis = System.currentTimeMillis();
 
                     //fire the event
                     listeners.forEach(l -> l.gestureDetected(new SwipeGestureInformation(

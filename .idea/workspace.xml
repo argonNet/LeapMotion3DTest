@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b3fc928f-1fad-4d55-8246-6752b23e06eb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/leapmotion3dtest/leapmotion/gestures/SwipeGestureDetector.java" afterPath="$PROJECT_DIR$/src/main/java/leapmotion3dtest/leapmotion/gestures/SwipeGestureDetector.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/leapmotion3dtest/leapmotion/gestures/SwipeGestureInformation.java" afterPath="$PROJECT_DIR$/src/main/java/leapmotion3dtest/leapmotion/gestures/SwipeGestureInformation.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/leapmotion3dtest/view/MainViewController.java" afterPath="$PROJECT_DIR$/src/main/java/leapmotion3dtest/view/MainViewController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/mainView.fxml" afterPath="$PROJECT_DIR$/src/main/resources/mainView.fxml" />
     </list>
     <ignored path="LeapMotion3DTest.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,8 +28,8 @@
       <file leaf-file-name="MainViewController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/leapmotion3dtest/view/MainViewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="158" column="84" selection-start-line="158" selection-start-column="84" selection-end-line="158" selection-end-column="84" />
+            <state relative-caret-position="1746">
+              <caret line="160" column="9" selection-start-line="160" selection-start-column="9" selection-end-line="160" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -72,7 +70,7 @@
       <file leaf-file-name="View3DController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/leapmotion3dtest/view3d/View3DController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="866">
+            <state relative-caret-position="546">
               <caret line="77" column="98" selection-start-line="77" selection-start-column="98" selection-end-line="77" selection-end-column="98" />
               <folding />
             </state>
@@ -122,8 +120,8 @@
       <file leaf-file-name="SwipeGestureDetector.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/leapmotion3dtest/leapmotion/gestures/SwipeGestureDetector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="726">
-              <caret line="139" column="83" selection-start-line="139" selection-start-column="83" selection-end-line="139" selection-end-column="83" />
+            <state relative-caret-position="-2354">
+              <caret line="15" column="27" selection-start-line="15" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -930,12 +928,12 @@
       <workItem from="1477062038418" duration="5197000" />
       <workItem from="1477165134596" duration="1295000" />
       <workItem from="1477167628354" duration="1527000" />
-      <workItem from="1477231421062" duration="3254000" />
+      <workItem from="1477231421062" duration="4310000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13262000" />
+    <option name="totallyTimeSpent" value="14318000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="2576" height="1337" extended-state="0" />
@@ -1251,9 +1249,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/leapmotion3dtest/view/MainViewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1746">
+          <caret line="160" column="9" selection-start-line="160" selection-start-column="9" selection-end-line="160" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/leapmotion3dtest/view3d/View3DController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="866">
+        <state relative-caret-position="546">
           <caret line="77" column="98" selection-start-line="77" selection-start-column="98" selection-end-line="77" selection-end-column="98" />
           <folding />
         </state>
@@ -1267,20 +1275,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/leapmotion3dtest/view/MainViewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="158" column="84" selection-start-line="158" selection-start-column="84" selection-end-line="158" selection-end-column="84" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/leapmotion3dtest/leapmotion/gestures/SwipeGestureDetector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="726">
-          <caret line="139" column="83" selection-start-line="139" selection-start-column="83" selection-end-line="139" selection-end-column="83" />
+        <state relative-caret-position="-2354">
+          <caret line="15" column="27" selection-start-line="15" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
           <folding />
         </state>
       </provider>
