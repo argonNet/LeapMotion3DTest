@@ -2,6 +2,7 @@ package leapmotion3dtest.view;
 
 import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Hand;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import leapmotion3dtest.leapmotion.IMonitorListener;
 import leapmotion3dtest.leapmotion.gestures.GestureInformation;
 import leapmotion3dtest.leapmotion.gestures.IGestureListener;
@@ -38,10 +40,15 @@ public class MainViewController implements Initializable, IMonitorListener, IGes
     @FXML private CheckBox cbxDisplayPalm;
     @FXML private CheckBox cbxDisplayInteractionBox;
 
-    @FXML private CheckBox cbxActivateMonitoring;
+    @FXML private CheckBox cbxActivateFrameMonitoring;
+    @FXML private CheckBox cbxActivateGestureMonitoring;
     @FXML private TextArea txtMonitoringBox;
     @FXML private Spinner<Integer> spnFrameMonitor;
     @FXML private Button btnClearMonitoring;
+
+    @FXML private Label lblGestureDetected;
+
+    private FadeTransition fadeInLblGestureDetected;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -69,11 +76,22 @@ public class MainViewController implements Initializable, IMonitorListener, IGes
         view3DController.displayPalm.set(true);
         view3DController.displayInteractionBox.set(false);
 
+        lblGestureDetected.setVisible(false);
+
+        fadeInLblGestureDetected = new FadeTransition(Duration.millis(1000));
+        fadeInLblGestureDetected.setNode(lblGestureDetected);
+        fadeInLblGestureDetected.setFromValue(0.0);
+        fadeInLblGestureDetected.setToValue(1.0);
+        fadeInLblGestureDetected.setCycleCount(2);
+        fadeInLblGestureDetected.setAutoReverse(true);
+        fadeInLblGestureDetected.setOnFinished((ActionEvent event) -> {
+            lblGestureDetected.setVisible(false);
+        });
     }
 
     @Override
     public void newFrameArrived(Frame newFrame) {
-        if(cbxActivateMonitoring.isSelected()){
+        if(cbxActivateFrameMonitoring.isSelected()){
             if(frameCount >= spnFrameMonitor.getValue()) {
 
                 Hand rightHand = newFrame.hands().rightmost();
@@ -122,15 +140,34 @@ public class MainViewController implements Initializable, IMonitorListener, IGes
         Platform.runLater(() -> {
 
             if (gestureInfo instanceof SwipeGestureInformation) {
-                if (((SwipeGestureInformation) gestureInfo).getDirection() == SwipeGestureDetector.Side.Left) {
-
-                    System.out.println("LEFT");
-
-                } else if (((SwipeGestureInformation) gestureInfo).getDirection() == SwipeGestureDetector.Side.Right) {
-
-                    System.out.println("RIGHT");
-                }
+                displaySwipeInformation((SwipeGestureInformation) gestureInfo);
             }
         });
     }
+
+    private void displayAndHideGesture(String text){
+        lblGestureDetected.setVisible(true);
+        lblGestureDetected.textProperty().set(text);
+        fadeInLblGestureDetected.playFromStart();
+    }
+
+    private void displaySwipeInformation(SwipeGestureInformation gestureInformation){
+
+        String direction = "";
+        if(gestureInformation.getDirection() == SwipeGestureDetector.Side.Right){
+            direction = "Right";
+        }else if(gestureInformation.getDirection() == SwipeGestureDetector.Side.Left){
+            direction = "Left";
+        }
+
+        if(cbxActivateGestureMonitoring.isSelected()){
+            txtMonitoringBox.textProperty().setValue(
+                direction + " Swipe -> min V : " + gestureInformation.getMinVelocityDetected() +
+                " | max V : " + gestureInformation.getMaxVelocityDetected() +
+                "\n" + txtMonitoringBox.textProperty().get());
+        }
+
+        displayAndHideGesture(direction + " Swipe ");
+    }
+
 }

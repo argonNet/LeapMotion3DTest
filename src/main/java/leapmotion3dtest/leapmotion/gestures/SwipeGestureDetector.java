@@ -35,7 +35,7 @@ public class SwipeGestureDetector implements IGestureDetector {
 
     private final static int GESTURE_LENGTH = 15;
     private final static int MIN_GESTURE_VELOCITY_X_FRAME_DECTECTION = 500;
-    private final static int MAX_GESTURE_VELOCITY_X_VALIDATION = 1000;
+    private final static int MAX_GESTURE_VELOCITY_X_VALIDATION = 1200;
     private final static double MIN_R = 0.5;
     private final static double MIN_SLOPE  = 0.5;
 
@@ -43,6 +43,7 @@ public class SwipeGestureDetector implements IGestureDetector {
 
     private int frameGestureCount;
     private double xVelocityMax;
+    private double xVelocityMin;
     private Side currentGestureDirection;
 
     private SimpleRegression regression;
@@ -62,6 +63,7 @@ public class SwipeGestureDetector implements IGestureDetector {
 
         listeners = new ArrayList<>();
         xVelocityMax = 0;
+        xVelocityMin = Double.MAX_VALUE;
     }
 
     //region Constructor
@@ -123,18 +125,19 @@ public class SwipeGestureDetector implements IGestureDetector {
                 //Checking max velocity on the gesture
                 //Abs use for compatibility for both gesture (right and left)
                 xVelocityMax =  Math.max(Math.abs(selectedHand.palmVelocity().getX()),xVelocityMax);
-
+                xVelocityMin =  Math.min(Math.abs(selectedHand.palmVelocity().getX()),xVelocityMin);
 
                 if(frameGestureCount >= GESTURE_LENGTH && //We reach the end of the gesture
                    xVelocityMax >= MAX_GESTURE_VELOCITY_X_VALIDATION && //The max velocity is OK
                     (regression.getR() >= MIN_R || regression.getR() <= -1 * MIN_R) &&
                    (-1 * MIN_SLOPE <= regression.getSlope() && regression.getSlope() <= MIN_R)){
 
-//                    System.out.println("!!!! RIGHT SWIPE DETECTED !!!! -> Max Velo : " + xVelocityMax);
+//                    System.out.println("!!!! SWIPE DETECTED !!!! -> Max Velo : " + xVelocityMax);
 //                    System.out.println("Slope : " + regression.getSlope());
 
                     //fire the event
-                    listeners.forEach(l -> l.gestureDetected(new SwipeGestureInformation(currentGestureDirection)));
+                    listeners.forEach(l -> l.gestureDetected(new SwipeGestureInformation(
+                            currentGestureDirection, xVelocityMin, xVelocityMax)));
                 }
 
 
@@ -147,6 +150,7 @@ public class SwipeGestureDetector implements IGestureDetector {
 
                     frameGestureCount = 0;
                     xVelocityMax = 0;
+                    xVelocityMin = Double.MAX_VALUE;
                 }
 
             }
