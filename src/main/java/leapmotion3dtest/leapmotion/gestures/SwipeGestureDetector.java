@@ -134,8 +134,8 @@ public class SwipeGestureDetector implements IGestureDetector {
                 if(frameGestureCount >= GESTURE_LENGTH && //We reach the end of the gesture
                    xVelocityMax >= MAX_GESTURE_VELOCITY_X_VALIDATION && //The max velocity is OK
                    System.currentTimeMillis() - lastGestureDetectedInMillis > MIN_DELAY_BETWEEN_GESTURE_IN_MILLIS && //To prevent long gesture launch several Swipe event
-                    (regression.getR() >= MIN_R || regression.getR() <= -1 * MIN_R) &&
-                   (-1 * MIN_SLOPE <= regression.getSlope() && regression.getSlope() <= MIN_R)){
+                   Math.abs(regression.getR()) >= MIN_R &&
+                   (-1 * MIN_SLOPE <= regression.getSlope() && regression.getSlope() <= MIN_SLOPE)){
 
                     System.out.println("!!!! SWIPE DETECTED !!!! -> Time " + System.currentTimeMillis() );
 //                    System.out.println("Slope : " + regression.getSlope());
