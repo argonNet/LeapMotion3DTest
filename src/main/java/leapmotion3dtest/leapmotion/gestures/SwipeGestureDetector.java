@@ -1,6 +1,7 @@
 package leapmotion3dtest.leapmotion.gestures;
 
-import com.leapmotion.leap.Frame;
+import com.leapmotion.leap.Hand;
+import leapmotion3dtest.leapmotion.gestures.information.SwipeGestureInformation;
 import org.apache.commons.math.stat.regression.SimpleRegression;
 
 /**
@@ -67,9 +68,10 @@ public class SwipeGestureDetector extends BaseGestureDetector implements IGestur
 
     /**
      * Method that get the frame and detect the Gesture
+     * @param selectedHand
      */
     @Override
-    protected void onFrameRegisterd(){
+    protected void onFrameRegistered(Hand selectedHand){
 
 
             //Gesture detection start here ...

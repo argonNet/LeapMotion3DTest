@@ -10,12 +10,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import leapmotion3dtest.leapmotion.IMonitorListener;
-import leapmotion3dtest.leapmotion.gestures.GestureInformation;
-import leapmotion3dtest.leapmotion.gestures.IGestureListener;
-import leapmotion3dtest.leapmotion.gestures.SwipeGestureDetector;
-import leapmotion3dtest.leapmotion.gestures.SwipeGestureInformation;
+import leapmotion3dtest.leapmotion.gestures.*;
+import leapmotion3dtest.leapmotion.gestures.information.BaseGestureInformation;
+import leapmotion3dtest.leapmotion.gestures.information.HandOpenCloseGestureInformation;
+import leapmotion3dtest.leapmotion.gestures.information.HandUpDownGestureInformation;
+import leapmotion3dtest.leapmotion.gestures.information.SwipeGestureInformation;
 import leapmotion3dtest.view3d.View3DController;
 
 import java.net.URL;
@@ -26,6 +28,8 @@ import java.util.ResourceBundle;
  */
 public class MainViewController implements Initializable, IMonitorListener, IGestureListener {
 
+
+    private final static int VOLUME_SIZE_INC = 5;
     private int frameCount;
     public View3DController view3DController;
 
@@ -47,6 +51,9 @@ public class MainViewController implements Initializable, IMonitorListener, IGes
     @FXML private Button btnClearMonitoring;
 
     @FXML private Label lblGestureDetected;
+
+    @FXML private AnchorPane volumeBackground;
+    @FXML private Rectangle volumeStatus;
 
     private FadeTransition fadeInLblGestureDetected;
 
@@ -87,6 +94,8 @@ public class MainViewController implements Initializable, IMonitorListener, IGes
         fadeInLblGestureDetected.setOnFinished((ActionEvent event) -> {
             lblGestureDetected.setVisible(false);
         });
+
+        volumeBackground.visibleProperty().set(false);
     }
 
     @Override
@@ -135,12 +144,22 @@ public class MainViewController implements Initializable, IMonitorListener, IGes
     }
 
     @Override
-    public void gestureDetected(GestureInformation gestureInfo) {
+    public void gestureDetected(BaseGestureInformation gestureInfo) {
 
         Platform.runLater(() -> {
 
             if (gestureInfo instanceof SwipeGestureInformation) {
+
                 displaySwipeInformation((SwipeGestureInformation) gestureInfo);
+
+            }else if(gestureInfo instanceof HandOpenCloseGestureInformation) {
+
+                displayOpenCloseGestureInformation((HandOpenCloseGestureInformation) gestureInfo);
+
+            }else if(gestureInfo instanceof HandUpDownGestureInformation){
+
+                displayUpDownGestureInformation((HandUpDownGestureInformation) gestureInfo);
+
             }
         });
     }
@@ -168,6 +187,33 @@ public class MainViewController implements Initializable, IMonitorListener, IGes
         }
 
         displayAndHideGesture(direction + " Swipe ");
+    }
+
+    private void displayOpenCloseGestureInformation(HandOpenCloseGestureInformation gestureInformation){
+        if(gestureInformation.getCloseOpenStatus() == HandOpenCloseGestureInformation.CloseOpenStatus.Opening){
+            displayAndHideGesture("Hand Opening");
+
+            volumeBackground.visibleProperty().set(true);
+
+        }else if(gestureInformation.getCloseOpenStatus() == HandOpenCloseGestureInformation.CloseOpenStatus.Closing){
+            displayAndHideGesture("Hand Closing");
+
+            volumeBackground.visibleProperty().set(false);
+
+        }
+    }
+
+    private void displayUpDownGestureInformation(HandUpDownGestureInformation gestureInformation){
+        if(gestureInformation.getUpDownStatus() == HandUpDownGestureInformation.UpDownStatus.Down){
+
+            volumeStatus.setHeight(volumeStatus.getHeight() - VOLUME_SIZE_INC);
+
+        }else if(gestureInformation.getUpDownStatus() == HandUpDownGestureInformation.UpDownStatus.Up){
+
+            volumeStatus.setHeight(volumeStatus.getHeight() + VOLUME_SIZE_INC);
+
+
+        }
     }
 
 }

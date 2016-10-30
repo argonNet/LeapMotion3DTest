@@ -1,21 +1,21 @@
 package leapmotion3dtest.leapmotion.gestures;
 
-import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Hand;
+import leapmotion3dtest.leapmotion.gestures.information.HandOpenCloseGestureInformation;
 
 /**
  * Created by Argon on 30.10.16.
  */
-public class HandOpeningGestureDetector extends BaseGestureDetector {
+public class HandOpenCloseGestureDetector extends BaseGestureDetector {
 
     //region Enum / Constants / Variables
 
-    private final static double FINGER_ANGLE_LIMIT_FOR_CLOSED_HAND = 0.2;
-    private final static double FINGER_ANGLE_LIMIT_FOR_OPEN_HAND = 0.2;
+    private final static double FINGER_ANGLE_LIMIT_FOR_CLOSED_HAND = 0.3;
+    private final static double FINGER_ANGLE_LIMIT_FOR_OPEN_HAND = 0.3;
 
     private final static long OPEN_CLOSE_GESTURE_DELAY = 1000;
 
-    private final static double ROLL_HAND_ANGLE_LIMIT = 0.2;
+    private final static double ROLL_HAND_ANGLE_LIMIT = 0.3;
 
     private boolean wasOpen;
     private boolean wasClose;
@@ -28,7 +28,7 @@ public class HandOpeningGestureDetector extends BaseGestureDetector {
     /**
      * Constructor in which we need to precise which end to detect
      */
-    public HandOpeningGestureDetector(Side handSide){
+    public HandOpenCloseGestureDetector(Side handSide){
         super(handSide);
         this.handSide = handSide;
 
@@ -49,39 +49,38 @@ public class HandOpeningGestureDetector extends BaseGestureDetector {
 
     /**
      *
+     * @param selectedHand
      */
     @Override
-    protected void onFrameRegisterd(){
+    protected void onFrameRegistered(Hand selectedHand){
 
         if(Math.abs(selectedHand.palmNormal().roll()) <= ROLL_HAND_ANGLE_LIMIT){
 
             boolean isClose = isHandClosed(selectedHand);
             boolean isOpen = isHandOpen(selectedHand);
 
-            if(isOpen){
-                lastHandOpenStatus = System.currentTimeMillis();
-            }
-
-            if(isClose){
-                lastHandCloseStatus = System.currentTimeMillis();
-            }
+            if(isOpen) lastHandOpenStatus = System.currentTimeMillis();
+            if(isClose) lastHandCloseStatus = System.currentTimeMillis();
 
             //Detecting an open status modification
             if(!wasOpen && isOpen &&
                System.currentTimeMillis() - lastHandCloseStatus <= OPEN_CLOSE_GESTURE_DELAY){
-                System.out.println( " Ouverture ");
+                //fire the event
+                listeners.forEach(l -> l.gestureDetected(new HandOpenCloseGestureInformation(
+                        HandOpenCloseGestureInformation.CloseOpenStatus.Opening)));
             }
 
             if(!wasClose && isClose &&
                System.currentTimeMillis() - lastHandOpenStatus <= OPEN_CLOSE_GESTURE_DELAY){
-                System.out.println( " Fermeture ");
+                //fire the event
+                listeners.forEach(l -> l.gestureDetected(new HandOpenCloseGestureInformation(
+                        HandOpenCloseGestureInformation.CloseOpenStatus.Closing)));
             }
 
             wasOpen = isOpen;
             wasClose = isClose;
         }
     }
-
 
     private boolean isHandOpen(Hand hand){
         return (hand.isValid() &&

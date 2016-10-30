@@ -18,11 +18,11 @@ public abstract class BaseGestureDetector implements IGestureDetector {
         Right
     }
 
-
     protected Side handSide;
-    protected Hand selectedHand;
 
     protected List<IGestureListener> listeners;
+
+    private boolean detectionActivated;
 
     //endregion
 
@@ -35,6 +35,8 @@ public abstract class BaseGestureDetector implements IGestureDetector {
     public BaseGestureDetector(Side handSide){
         listeners = new ArrayList<>();
         this.handSide = handSide;
+
+        startDetection();
     }
 
     //endregion
@@ -68,18 +70,30 @@ public abstract class BaseGestureDetector implements IGestureDetector {
      */
     @Override
     public void registerFrame(Frame newFrame) {
-        if(handSide == Side.Left){
-            selectedHand = newFrame.hands().leftmost();
-        }else if(handSide == Side.Right){
-            selectedHand = newFrame.hands().rightmost();
-        }else{
-            throw new UnsupportedOperationException("HandSide not supported !");
-        }
 
-        onFrameRegisterd();
+        if(detectionActivated) {
+            Hand selectedHand;
+            if (handSide == Side.Left) {
+                selectedHand = newFrame.hands().leftmost();
+            } else if (handSide == Side.Right) {
+                selectedHand = newFrame.hands().rightmost();
+            } else {
+                throw new UnsupportedOperationException("HandSide not supported !");
+            }
+
+            onFrameRegistered(selectedHand);
+        }
     }
 
-    protected abstract void onFrameRegisterd();
+    protected abstract void onFrameRegistered(Hand selectedHand);
+
+    protected void startDetection(){
+        detectionActivated = true;
+    }
+
+    protected  void stopDetection(){
+        detectionActivated = false;
+    }
 
     //endregion
 

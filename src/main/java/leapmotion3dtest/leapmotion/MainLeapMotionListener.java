@@ -3,9 +3,7 @@ package leapmotion3dtest.leapmotion;
 
 import com.leapmotion.leap.*;
 import javafx.application.Platform;
-import leapmotion3dtest.leapmotion.gestures.HandOpeningGestureDetector;
-import leapmotion3dtest.leapmotion.gestures.IGestureDetector;
-import leapmotion3dtest.leapmotion.gestures.SwipeGestureDetector;
+import leapmotion3dtest.leapmotion.gestures.*;
 import leapmotion3dtest.view3d.View3DController;
 
 
@@ -21,18 +19,22 @@ public class MainLeapMotionListener extends Listener {
     private IMonitorListener monitorListener;
 
     private IGestureDetector swipeDetector;
-    private IGestureDetector handOpeningDetector;
+    private IGestureDetector handOpenCloseDetector;
+    private HandUpDownGestureDetector handUpDownDetector;
 
     //endregion
 
-    //region Constructor
+    //region Constructor0
 
     public MainLeapMotionListener(View3DController view3d, IMonitorListener monitorListener){
         this.view3d = view3d;
         this.monitorListener = monitorListener;
 
         this.swipeDetector = new SwipeGestureDetector(SwipeGestureDetector.Side.Right);
-        this.handOpeningDetector = new HandOpeningGestureDetector(SwipeGestureDetector.Side.Right);
+        this.handOpenCloseDetector = new HandOpenCloseGestureDetector(SwipeGestureDetector.Side.Right);
+        this.handUpDownDetector = new HandUpDownGestureDetector(BaseGestureDetector.Side.Right);
+
+        this.handOpenCloseDetector.addListener(handUpDownDetector);
     }
 
     //endregion
@@ -54,7 +56,8 @@ public class MainLeapMotionListener extends Listener {
     public void onFrame(Controller controller) {
 
         swipeDetector.registerFrame(controller.frame());
-        handOpeningDetector.registerFrame(controller.frame());
+        handOpenCloseDetector.registerFrame(controller.frame());
+        handUpDownDetector.registerFrame(controller.frame());
 
         Hand handRight = controller.frame().hands().rightmost();
         Hand handLeft = controller.frame().hands().leftmost();
@@ -85,6 +88,14 @@ public class MainLeapMotionListener extends Listener {
 
     public IGestureDetector getSwipeGestureDetector(){
         return swipeDetector;
+    }
+
+    public IGestureDetector getHandOpenCloseDetector(){
+        return handOpenCloseDetector;
+    }
+
+    public IGestureDetector getHandUpDownDetector(){
+        return handUpDownDetector;
     }
 
     //endregion

@@ -33,6 +33,8 @@ public class Main extends Application {
         controller = new Controller(listener);
 
         listener.getSwipeGestureDetector().addListener((MainViewController)mainViewLoader.getController());
+        listener.getHandOpenCloseDetector().addListener((MainViewController)mainViewLoader.getController());
+        listener.getHandUpDownDetector().addListener((MainViewController)mainViewLoader.getController());
     }
 
 

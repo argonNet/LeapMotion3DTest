@@ -1,13 +1,15 @@
-package leapmotion3dtest.leapmotion.gestures;
+package leapmotion3dtest.leapmotion.gestures.information;
+
+import leapmotion3dtest.leapmotion.gestures.BaseGestureDetector;
 
 /**
  * Information about a swipe gesture :
  * - Swipe direction (right or left)
  */
-public class SwipeGestureInformation extends GestureInformation{
+public class SwipeGestureInformation extends BaseGestureInformation {
 
-    private SwipeGestureDetector.Side direction;
-    public SwipeGestureDetector.Side getDirection(){return direction;}
+    private BaseGestureDetector.Side direction;
+    public BaseGestureDetector.Side getDirection(){return direction;}
 
     private double maxVelocityDetected;
     public  double getMaxVelocityDetected(){return this.maxVelocityDetected;}
@@ -16,7 +18,7 @@ public class SwipeGestureInformation extends GestureInformation{
     public  double getMinVelocityDetected(){return this.minVelocityDetected;}
 
     public SwipeGestureInformation(
-            SwipeGestureDetector.Side direction,
+            BaseGestureDetector.Side direction,
             double minVelocityDetected,
             double maxVelocityDetected){
         this.direction = direction;
