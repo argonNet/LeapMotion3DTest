@@ -19,6 +19,7 @@ public class MainLeapMotionListener extends Listener {
     private View3DController view3d;
 
     private IMonitorListener monitorListener;
+
     private IGestureDetector swipeDetector;
     private IGestureDetector handOpeningDetector;
 
@@ -57,9 +58,6 @@ public class MainLeapMotionListener extends Listener {
 
         Hand handRight = controller.frame().hands().rightmost();
         Hand handLeft = controller.frame().hands().leftmost();
-
-        Finger indexRight = handRight.fingers().fingerType(Finger.Type.TYPE_INDEX).get(0);
-        Finger thumbRight = handRight.fingers().fingerType(Finger.Type.TYPE_THUMB).get(0);
 
         Platform.runLater(() -> {
 

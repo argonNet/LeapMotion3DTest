@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Base class for all the gesture
  */
-public class BaseGestureDetector implements IGestureDetector {
+public abstract class BaseGestureDetector implements IGestureDetector {
 
     //region Enum / Constants / Variables
 
@@ -76,7 +76,10 @@ public class BaseGestureDetector implements IGestureDetector {
             throw new UnsupportedOperationException("HandSide not supported !");
         }
 
+        onFrameRegisterd(newFrame);
     }
+
+    protected abstract void onFrameRegisterd(Frame newFrame);
 
     //endregion
 

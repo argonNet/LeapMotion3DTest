@@ -70,8 +70,7 @@ public class SwipeGestureDetector extends BaseGestureDetector implements IGestur
      * @param newFrame frame to take care of.
      */
     @Override
-    public void registerFrame(Frame newFrame){
-
+    protected void onFrameRegisterd(Frame newFrame){
 
 
             //Gesture detection start here ...

@@ -36,26 +36,43 @@ public class HandOpeningGestureDetector extends BaseGestureDetector {
      * @param newFrame frame to take care of.
      */
     @Override
-    public void registerFrame(Frame newFrame){
-        super.registerFrame(newFrame);
+    protected void onFrameRegisterd(Frame newFrame){
+
+        System.out.println("1");
 
         isFistClosed(selectedHand);
+
+        System.out.println("2");
+
         isFistOpen(selectedHand);
+
+        System.out.println("3");
     }
 
 
     private boolean isFistClosed(Hand hand){
-        if(Math.abs(hand.grabAngle()) <= FINGER_ANGLE_LIMIT_FOR_CLOSED_HAND){
-            System.out.println("Fist closed");
+        try{
+            if(hand.isValid() &&
+                    Math.abs(hand.grabAngle()) <= FINGER_ANGLE_LIMIT_FOR_CLOSED_HAND){
+                System.out.println("Fist closed");
+            }
+
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+
         }
+
         return true;
     }
 
 
     private boolean isFistOpen(Hand hand){
-        if( Math.PI - FINGER_ANGLE_LIMIT_FOR_OPEN_HAND <= Math.abs(hand.grabAngle())  &&
-            Math.abs(hand.grabAngle()) <=  Math.PI + FINGER_ANGLE_LIMIT_FOR_OPEN_HAND){
+        if(hand.isValid() &&
+           Math.PI - FINGER_ANGLE_LIMIT_FOR_OPEN_HAND <= Math.abs(hand.grabAngle())  &&
+           Math.abs(hand.grabAngle()) <=  Math.PI + FINGER_ANGLE_LIMIT_FOR_OPEN_HAND){
+
             System.out.println("Fist Open");
+
         }
         return true;
     }
