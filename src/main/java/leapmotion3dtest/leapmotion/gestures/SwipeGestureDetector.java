@@ -1,11 +1,7 @@
 package leapmotion3dtest.leapmotion.gestures;
 
 import com.leapmotion.leap.Frame;
-import com.leapmotion.leap.Hand;
 import org.apache.commons.math.stat.regression.SimpleRegression;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class detect swipe and inform her client.
@@ -25,14 +21,9 @@ import java.util.List;
  *
  * /!\ Only work for on hand /!\
  * */
-public class SwipeGestureDetector implements IGestureDetector {
+public class SwipeGestureDetector extends BaseGestureDetector implements IGestureDetector {
 
     //region Enum / Constants / Variables
-
-    public enum Side{
-        Left,
-        Right
-    }
 
     private final static int GESTURE_LENGTH = 15;
     private final static int MIN_GESTURE_VELOCITY_X_FRAME_DECTECTION = 500;
@@ -41,8 +32,6 @@ public class SwipeGestureDetector implements IGestureDetector {
     private final static double MIN_R = 0.5;
     private final static double MIN_SLOPE  = 0.5;
 
-    private Side handSide;
-
     private long lastGestureDetectedInMillis;
     private int frameGestureCount;
     private double xVelocityMax;
@@ -50,7 +39,6 @@ public class SwipeGestureDetector implements IGestureDetector {
     private Side currentGestureDirection;
 
     private SimpleRegression regression;
-    private List<IGestureListener> listeners;
 
 
     //endregion
@@ -60,11 +48,10 @@ public class SwipeGestureDetector implements IGestureDetector {
      * @param handSide Hand to detect (right or left one)
      */
     public SwipeGestureDetector(Side handSide){
-        this.handSide = handSide;
+        super(handSide);
 
         regression = new SimpleRegression();
 
-        listeners = new ArrayList<>();
         xVelocityMax = 0;
         xVelocityMin = Double.MAX_VALUE;
         lastGestureDetectedInMillis = 0;
@@ -77,25 +64,6 @@ public class SwipeGestureDetector implements IGestureDetector {
 
     //region Methods
 
-    /**
-     * Add a listener to the swipe gesture
-     * @param listener listener to add for the gesture
-     */
-    @Override
-    public void addListener(IGestureListener listener){
-        listeners.add(listener);
-    }
-
-    /**
-     * Remove a listener to the swipe gesture
-     * @param listener listener to remove for the gesture
-     */
-    @Override
-    public void removeListener(IGestureListener listener){
-        if(listeners.contains(listener)) {
-            listeners.remove(listener);
-        }
-    }
 
     /**
      * Method that get the frame and detect the Gesture
@@ -104,15 +72,7 @@ public class SwipeGestureDetector implements IGestureDetector {
     @Override
     public void registerFrame(Frame newFrame){
 
-            Hand selectedHand;
 
-            if(handSide == Side.Left){
-                selectedHand = newFrame.hands().leftmost();
-            }else if(handSide == Side.Right){
-                selectedHand = newFrame.hands().rightmost();
-            }else{
-                throw new UnsupportedOperationException("HandSide not supported !");
-            }
 
             //Gesture detection start here ...
 

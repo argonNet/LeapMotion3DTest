@@ -29,6 +29,7 @@ public class Main extends Application {
         // Create a sample listener and assign it to a controller to receive events
         listener = new MainLeapMotionListener(((MainViewController)mainViewLoader.getController()).view3DController,
                                               mainViewLoader.getController());
+
         controller = new Controller(listener);
 
         listener.getSwipeGestureDetector().addListener((MainViewController)mainViewLoader.getController());

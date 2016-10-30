@@ -3,6 +3,7 @@ package leapmotion3dtest.leapmotion;
 
 import com.leapmotion.leap.*;
 import javafx.application.Platform;
+import leapmotion3dtest.leapmotion.gestures.HandOpeningGestureDetector;
 import leapmotion3dtest.leapmotion.gestures.IGestureDetector;
 import leapmotion3dtest.leapmotion.gestures.SwipeGestureDetector;
 import leapmotion3dtest.view3d.View3DController;
@@ -19,6 +20,7 @@ public class MainLeapMotionListener extends Listener {
 
     private IMonitorListener monitorListener;
     private IGestureDetector swipeDetector;
+    private IGestureDetector handOpeningDetector;
 
     //endregion
 
@@ -29,6 +31,7 @@ public class MainLeapMotionListener extends Listener {
         this.monitorListener = monitorListener;
 
         this.swipeDetector = new SwipeGestureDetector(SwipeGestureDetector.Side.Right);
+        this.handOpeningDetector = new HandOpeningGestureDetector(SwipeGestureDetector.Side.Right);
     }
 
     //endregion
@@ -50,6 +53,7 @@ public class MainLeapMotionListener extends Listener {
     public void onFrame(Controller controller) {
 
         swipeDetector.registerFrame(controller.frame());
+        handOpeningDetector.registerFrame(controller.frame());
 
         Hand handRight = controller.frame().hands().rightmost();
         Hand handLeft = controller.frame().hands().leftmost();
