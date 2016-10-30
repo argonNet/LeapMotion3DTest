@@ -76,10 +76,10 @@ public abstract class BaseGestureDetector implements IGestureDetector {
             throw new UnsupportedOperationException("HandSide not supported !");
         }
 
-        onFrameRegisterd(newFrame);
+        onFrameRegisterd();
     }
 
-    protected abstract void onFrameRegisterd(Frame newFrame);
+    protected abstract void onFrameRegisterd();
 
     //endregion
 

@@ -26,7 +26,7 @@ public class SwipeGestureDetector extends BaseGestureDetector implements IGestur
     //region Enum / Constants / Variables
 
     private final static int GESTURE_LENGTH = 15;
-    private final static int MIN_GESTURE_VELOCITY_X_FRAME_DECTECTION = 500;
+    private final static int MIN_GESTURE_VELOCITY_X_FRAME_DECTECTION = 800;
     private final static int MAX_GESTURE_VELOCITY_X_VALIDATION = 1200;
     private final static long MIN_DELAY_BETWEEN_GESTURE_IN_MILLIS = 500;
     private final static double MIN_R = 0.5;
@@ -67,10 +67,9 @@ public class SwipeGestureDetector extends BaseGestureDetector implements IGestur
 
     /**
      * Method that get the frame and detect the Gesture
-     * @param newFrame frame to take care of.
      */
     @Override
-    protected void onFrameRegisterd(Frame newFrame){
+    protected void onFrameRegisterd(){
 
 
             //Gesture detection start here ...

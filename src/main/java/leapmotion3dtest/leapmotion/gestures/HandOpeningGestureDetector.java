@@ -10,8 +10,18 @@ public class HandOpeningGestureDetector extends BaseGestureDetector {
 
     //region Enum / Constants / Variables
 
-    private final static double FINGER_ANGLE_LIMIT_FOR_CLOSED_HAND = 0.5;
-    private final static double FINGER_ANGLE_LIMIT_FOR_OPEN_HAND = 0.5;
+    private final static double FINGER_ANGLE_LIMIT_FOR_CLOSED_HAND = 0.2;
+    private final static double FINGER_ANGLE_LIMIT_FOR_OPEN_HAND = 0.2;
+
+    private final static long OPEN_CLOSE_GESTURE_DELAY = 1000;
+
+    private final static double ROLL_HAND_ANGLE_LIMIT = 0.2;
+
+    private boolean wasOpen;
+    private boolean wasClose;
+
+    private long lastHandOpenStatus;
+    private long lastHandCloseStatus;
 
     //endregion
 
@@ -21,6 +31,12 @@ public class HandOpeningGestureDetector extends BaseGestureDetector {
     public HandOpeningGestureDetector(Side handSide){
         super(handSide);
         this.handSide = handSide;
+
+        wasOpen = false;
+        wasClose = false;
+
+        lastHandOpenStatus = 0;
+        lastHandCloseStatus = 0;
     }
 
     //region Constructor
@@ -32,49 +48,50 @@ public class HandOpeningGestureDetector extends BaseGestureDetector {
 
 
     /**
-     * Method that get the frame and detect the Gesture
-     * @param newFrame frame to take care of.
+     *
      */
     @Override
-    protected void onFrameRegisterd(Frame newFrame){
+    protected void onFrameRegisterd(){
 
-        System.out.println("1");
+        if(Math.abs(selectedHand.palmNormal().roll()) <= ROLL_HAND_ANGLE_LIMIT){
 
-        isFistClosed(selectedHand);
+            boolean isClose = isHandClosed(selectedHand);
+            boolean isOpen = isHandOpen(selectedHand);
 
-        System.out.println("2");
-
-        isFistOpen(selectedHand);
-
-        System.out.println("3");
-    }
-
-
-    private boolean isFistClosed(Hand hand){
-        try{
-            if(hand.isValid() &&
-                    Math.abs(hand.grabAngle()) <= FINGER_ANGLE_LIMIT_FOR_CLOSED_HAND){
-                System.out.println("Fist closed");
+            if(isOpen){
+                lastHandOpenStatus = System.currentTimeMillis();
             }
 
-        }catch(Exception e){
-            System.out.println(e.getMessage());
+            if(isClose){
+                lastHandCloseStatus = System.currentTimeMillis();
+            }
 
+            //Detecting an open status modification
+            if(!wasOpen && isOpen &&
+               System.currentTimeMillis() - lastHandCloseStatus <= OPEN_CLOSE_GESTURE_DELAY){
+                System.out.println( " Ouverture ");
+            }
+
+            if(!wasClose && isClose &&
+               System.currentTimeMillis() - lastHandOpenStatus <= OPEN_CLOSE_GESTURE_DELAY){
+                System.out.println( " Fermeture ");
+            }
+
+            wasOpen = isOpen;
+            wasClose = isClose;
         }
-
-        return true;
     }
 
 
-    private boolean isFistOpen(Hand hand){
-        if(hand.isValid() &&
-           Math.PI - FINGER_ANGLE_LIMIT_FOR_OPEN_HAND <= Math.abs(hand.grabAngle())  &&
-           Math.abs(hand.grabAngle()) <=  Math.PI + FINGER_ANGLE_LIMIT_FOR_OPEN_HAND){
+    private boolean isHandOpen(Hand hand){
+        return (hand.isValid() &&
+                Math.abs(hand.grabAngle()) <= FINGER_ANGLE_LIMIT_FOR_CLOSED_HAND);
+    }
 
-            System.out.println("Fist Open");
-
-        }
-        return true;
+    private boolean isHandClosed(Hand hand){
+        return (hand.isValid() &&
+                Math.PI - FINGER_ANGLE_LIMIT_FOR_OPEN_HAND <= Math.abs(hand.grabAngle())  &&
+                Math.abs(hand.grabAngle()) <=  Math.PI + FINGER_ANGLE_LIMIT_FOR_OPEN_HAND);
     }
 
     //endregion
