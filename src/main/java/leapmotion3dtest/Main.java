@@ -35,6 +35,7 @@ public class Main extends Application {
         listener.getSwipeGestureDetector().addListener((MainViewController)mainViewLoader.getController());
         listener.getHandOpenCloseDetector().addListener((MainViewController)mainViewLoader.getController());
         listener.getHandUpDownDetector().addListener((MainViewController)mainViewLoader.getController());
+        listener.getPinchGestureDetector().addListener((MainViewController)mainViewLoader.getController());
     }
 
 

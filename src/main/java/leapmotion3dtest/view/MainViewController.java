@@ -14,10 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import leapmotion3dtest.leapmotion.IMonitorListener;
 import leapmotion3dtest.leapmotion.gestures.*;
-import leapmotion3dtest.leapmotion.gestures.information.BaseGestureInformation;
-import leapmotion3dtest.leapmotion.gestures.information.HandOpenCloseGestureInformation;
-import leapmotion3dtest.leapmotion.gestures.information.HandUpDownGestureInformation;
-import leapmotion3dtest.leapmotion.gestures.information.SwipeGestureInformation;
+import leapmotion3dtest.leapmotion.gestures.information.*;
 import leapmotion3dtest.view3d.View3DController;
 
 import java.net.URL;
@@ -160,6 +157,10 @@ public class MainViewController implements Initializable, IMonitorListener, IGes
 
                 displayUpDownGestureInformation((HandUpDownGestureInformation) gestureInfo);
 
+            }else if(gestureInfo instanceof PinchGestureInformation) {
+
+                displayPinchGestureInformation((PinchGestureInformation)gestureInfo);
+
             }
         });
     }
@@ -197,6 +198,20 @@ public class MainViewController implements Initializable, IMonitorListener, IGes
 
         }else if(gestureInformation.getCloseOpenStatus() == HandOpenCloseGestureInformation.CloseOpenStatus.Closing){
             displayAndHideGesture("Hand Closing");
+
+            volumeBackground.visibleProperty().set(false);
+
+        }
+    }
+
+    private void displayPinchGestureInformation(PinchGestureInformation gestureInformation){
+        if(gestureInformation.getIsPinched()){
+            displayAndHideGesture("Pinching");
+
+            volumeBackground.visibleProperty().set(true);
+
+        }else{
+            displayAndHideGesture("Not Pinching");
 
             volumeBackground.visibleProperty().set(false);
 

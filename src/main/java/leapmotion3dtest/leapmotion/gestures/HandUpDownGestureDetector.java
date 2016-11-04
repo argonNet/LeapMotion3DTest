@@ -4,6 +4,7 @@ import com.leapmotion.leap.Hand;
 import leapmotion3dtest.leapmotion.gestures.information.BaseGestureInformation;
 import leapmotion3dtest.leapmotion.gestures.information.HandOpenCloseGestureInformation;
 import leapmotion3dtest.leapmotion.gestures.information.HandUpDownGestureInformation;
+import leapmotion3dtest.leapmotion.gestures.information.PinchGestureInformation;
 
 /**
  * Created by Argon on 30.10.2016.
@@ -61,13 +62,11 @@ public class HandUpDownGestureDetector extends BaseGestureDetector implements IG
 
     @Override
     public void gestureDetected(BaseGestureInformation gestureInfo) {
-        if(gestureInfo instanceof HandOpenCloseGestureInformation) {
-            if (((HandOpenCloseGestureInformation) gestureInfo).getCloseOpenStatus() ==
-                    HandOpenCloseGestureInformation.CloseOpenStatus.Closing) {
-                stopDetection();
-            } else if (((HandOpenCloseGestureInformation) gestureInfo).getCloseOpenStatus() ==
-                    HandOpenCloseGestureInformation.CloseOpenStatus.Opening) {
+     if(gestureInfo instanceof PinchGestureInformation) {
+            if (((PinchGestureInformation) gestureInfo).getIsPinched()) {
                 startDetection();
+            } else {
+                stopDetection();
             }
         }
     }

@@ -20,6 +20,7 @@ public class MainLeapMotionListener extends Listener {
 
     private IGestureDetector swipeDetector;
     private IGestureDetector handOpenCloseDetector;
+    private IGestureDetector pinchGestureDetector;
     private HandUpDownGestureDetector handUpDownDetector;
 
     //endregion
@@ -33,6 +34,7 @@ public class MainLeapMotionListener extends Listener {
         this.swipeDetector = new SwipeGestureDetector(SwipeGestureDetector.Side.Right);
         this.handOpenCloseDetector = new HandOpenCloseGestureDetector(SwipeGestureDetector.Side.Right);
         this.handUpDownDetector = new HandUpDownGestureDetector(BaseGestureDetector.Side.Right);
+        this.pinchGestureDetector = new PinchGestureDetector(SwipeGestureDetector.Side.Right);
 
         this.handOpenCloseDetector.addListener(handUpDownDetector);
     }
@@ -58,6 +60,7 @@ public class MainLeapMotionListener extends Listener {
         swipeDetector.registerFrame(controller.frame());
         handOpenCloseDetector.registerFrame(controller.frame());
         handUpDownDetector.registerFrame(controller.frame());
+        pinchGestureDetector.registerFrame(controller.frame());
 
         Hand handRight = controller.frame().hands().rightmost();
         Hand handLeft = controller.frame().hands().leftmost();
@@ -93,6 +96,8 @@ public class MainLeapMotionListener extends Listener {
     public IGestureDetector getHandOpenCloseDetector(){
         return handOpenCloseDetector;
     }
+
+    public IGestureDetector getPinchGestureDetector () { return pinchGestureDetector;}
 
     public IGestureDetector getHandUpDownDetector(){
         return handUpDownDetector;
