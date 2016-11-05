@@ -32,9 +32,9 @@
                         <Font name="Arial Black" size="36.0" />
                      </font>
                   </Label>
-                  <AnchorPane fx:id="volumeBackground" layoutX="621.0" layoutY="14.0" prefHeight="277.0" prefWidth="29.0" style="-fx-background-color: blue;" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+                  <AnchorPane fx:id="volumeBackground" layoutX="621.0" layoutY="14.0" maxHeight="300.0" maxWidth="30.0" minHeight="300.0" minWidth="30.0" prefHeight="300.0" prefWidth="30.0" style="-fx-background-color: blue;" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
                      <children>
-                        <Rectangle fx:id="volumeStatus" arcHeight="5.0" arcWidth="5.0" fill="#1fff61" height="50.0" layoutX="1.0" layoutY="238.0" stroke="BLACK" strokeType="INSIDE" width="29.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <Rectangle fx:id="volumeStatus" arcHeight="5.0" arcWidth="5.0" fill="#1fff61" height="50.0" layoutX="1.0" layoutY="238.0" stroke="BLACK" strokeType="INSIDE" width="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </children>

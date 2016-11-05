@@ -65,11 +65,6 @@ public class SwipeGestureDetector extends BaseGestureDetector implements IGestur
 
     //region Methods
 
-
-    /**
-     * Method that get the frame and detect the Gesture
-     * @param selectedHand
-     */
     @Override
     protected void onFrameRegistered(Hand selectedHand){
 

@@ -32,6 +32,7 @@ public class PinchGestureDetector extends BaseGestureDetector {
 
 
     //region Methods
+
     @Override
     protected void onFrameRegistered(Hand selectedHand) {
         //Test index and thumb touch
@@ -46,11 +47,9 @@ public class PinchGestureDetector extends BaseGestureDetector {
 
         if(!previousRightIndexAndTumbClipped && rightIndexAndTumbClipped){
             //Start clipping
-            System.out.println("Start Clipping ...");
             listeners.forEach((x) -> x.gestureDetected(new PinchGestureInformation(true)));
         }else if(previousRightIndexAndTumbClipped && !rightIndexAndTumbClipped){
             //Stop clipping
-            System.out.println("Stop Clipping ...");
             listeners.forEach((x) -> x.gestureDetected(new PinchGestureInformation(false)));
         }
     }

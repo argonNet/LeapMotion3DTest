@@ -36,7 +36,7 @@ public class MainLeapMotionListener extends Listener {
         this.handUpDownDetector = new HandUpDownGestureDetector(BaseGestureDetector.Side.Right);
         this.pinchGestureDetector = new PinchGestureDetector(SwipeGestureDetector.Side.Right);
 
-        this.handOpenCloseDetector.addListener(handUpDownDetector);
+        this.pinchGestureDetector.addListener(handUpDownDetector);
     }
 
     //endregion

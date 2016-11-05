@@ -46,11 +46,6 @@ public class HandOpenCloseGestureDetector extends BaseGestureDetector {
 
     //region Methods
 
-
-    /**
-     *
-     * @param selectedHand
-     */
     @Override
     protected void onFrameRegistered(Hand selectedHand){
 

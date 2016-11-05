@@ -221,11 +221,11 @@ public class MainViewController implements Initializable, IMonitorListener, IGes
     private void displayUpDownGestureInformation(HandUpDownGestureInformation gestureInformation){
         if(gestureInformation.getUpDownStatus() == HandUpDownGestureInformation.UpDownStatus.Down){
 
-            volumeStatus.setHeight(volumeStatus.getHeight() - VOLUME_SIZE_INC);
+            if(volumeStatus.getHeight() > 0 ) volumeStatus.setHeight(volumeStatus.getHeight() - VOLUME_SIZE_INC);
 
         }else if(gestureInformation.getUpDownStatus() == HandUpDownGestureInformation.UpDownStatus.Up){
 
-            volumeStatus.setHeight(volumeStatus.getHeight() + VOLUME_SIZE_INC);
+            if(volumeStatus.getHeight() < volumeBackground.getMaxHeight() ) volumeStatus.setHeight(volumeStatus.getHeight() + VOLUME_SIZE_INC);
 
 
         }

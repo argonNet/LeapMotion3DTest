@@ -2,22 +2,21 @@ package leapmotion3dtest.leapmotion.gestures;
 
 import com.leapmotion.leap.Hand;
 import leapmotion3dtest.leapmotion.gestures.information.BaseGestureInformation;
-import leapmotion3dtest.leapmotion.gestures.information.HandOpenCloseGestureInformation;
 import leapmotion3dtest.leapmotion.gestures.information.HandUpDownGestureInformation;
 import leapmotion3dtest.leapmotion.gestures.information.PinchGestureInformation;
 
 /**
- * Created by Argon on 30.10.2016.
+ * Detect when the hand goes up or down. We raise the event if the hand did a minimum distance !
+ * This distance is precised in the DISTANCE_TO_RAISE_DETECTION constant.
  */
 public class HandUpDownGestureDetector extends BaseGestureDetector implements IGestureListener {
 
     //region Enum / Constants / Variables
 
-    private final static double FINGER_ANGLE_LIMIT_FOR_CLOSED_HAND = 0.2;
+    private final static double DISTANCE_TO_RAISE_DETECTION = 1.5;
 
-    private final static int NUMBER_OF_FRAME_TO_IGNORE = 10;
-
-    private int frameCountBeforeIgnore;
+    private double lastFrameYPosition;
+    private double currentProgression;
 
     //endregion
 
@@ -27,8 +26,8 @@ public class HandUpDownGestureDetector extends BaseGestureDetector implements IG
     public HandUpDownGestureDetector(Side handSide){
         super(handSide);
 
-        frameCountBeforeIgnore = 0;
-
+        lastFrameYPosition = 0;
+        currentProgression = 0;
     }
 
     //region Constructor
@@ -37,15 +36,12 @@ public class HandUpDownGestureDetector extends BaseGestureDetector implements IG
     //endregion
 
     //region Methods
-
-
-    /**
-     *
-     * @param selectedHand
-     */
     @Override
     protected void onFrameRegistered(Hand selectedHand){
-        if(frameCountBeforeIgnore == NUMBER_OF_FRAME_TO_IGNORE) {
+
+        double tmpShifting = selectedHand.palmPosition().getY() - lastFrameYPosition;
+
+        if(Math.abs(currentProgression) >= DISTANCE_TO_RAISE_DETECTION) {
 
             if (selectedHand.palmVelocity().getY() > 0) { //Up
                 listeners.forEach(l -> l.gestureDetected(new HandUpDownGestureInformation(
@@ -54,9 +50,11 @@ public class HandUpDownGestureDetector extends BaseGestureDetector implements IG
                 listeners.forEach(l -> l.gestureDetected(new HandUpDownGestureInformation(
                         HandUpDownGestureInformation.UpDownStatus.Down)));
             }
-            frameCountBeforeIgnore = 0;
+            currentProgression = 0;
         }
-        frameCountBeforeIgnore++;
+
+        currentProgression += tmpShifting;
+        lastFrameYPosition = selectedHand.palmPosition().getY();
     }
 
 
