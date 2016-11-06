@@ -29,7 +29,7 @@ public class SwipeGestureDetector extends BaseGestureDetector implements IGestur
 
     //region Enum / Constants / Variables
 
-    private final static int GESTURE_LENGTH = 30; //centimeters
+    private final static int GESTURE_LENGTH = 100; //millimeters
     private final static int FRAME_MAX_GESTURE_LENGTH = 50;
 
     private final static int MIN_GESTURE_VELOCITY_X_FRAME_DECTECTION = 750;

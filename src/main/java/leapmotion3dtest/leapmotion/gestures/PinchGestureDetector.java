@@ -15,7 +15,7 @@ public class PinchGestureDetector extends BaseGestureDetector {
 
     //region Constants / Variables
 
-    private final static int INDEX_THUMB_TOUCH = 30;
+    private final static int INDEX_THUMB_TOUCH = 25;
 
     private boolean rightIndexAndTumbClipped;
 
@@ -38,6 +38,7 @@ public class PinchGestureDetector extends BaseGestureDetector {
         //Test index and thumb touch
         Finger indexRight = selectedHand.fingers().fingerType(Finger.Type.TYPE_INDEX).get(0);
         Finger thumbRight = selectedHand.fingers().fingerType(Finger.Type.TYPE_THUMB).get(0);
+
 
         Point3D indexTipPos = new Point3D(indexRight.tipPosition().getX(), indexRight.tipPosition().getY(), indexRight.tipPosition().getZ());
         Point3D thumbTipPos = new Point3D(thumbRight.tipPosition().getX(), thumbRight.tipPosition().getY(), thumbRight.tipPosition().getZ());
