@@ -17,13 +17,18 @@ public class SwipeGestureInformation extends BaseGestureInformation {
     private double minVelocityDetected;
     public  double getMinVelocityDetected(){return this.minVelocityDetected;}
 
+    private double distance;
+    public double getDistance(){return this.distance;}
+
     public SwipeGestureInformation(
             BaseGestureDetector.Side direction,
             double minVelocityDetected,
-            double maxVelocityDetected){
+            double maxVelocityDetected,
+            double distance){
         this.direction = direction;
         this.minVelocityDetected = minVelocityDetected;
         this.maxVelocityDetected = maxVelocityDetected;
+        this.distance = distance;
     }
 
 
