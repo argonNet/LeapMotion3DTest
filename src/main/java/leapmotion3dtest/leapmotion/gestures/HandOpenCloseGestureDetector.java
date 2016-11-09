@@ -10,12 +10,12 @@ public class HandOpenCloseGestureDetector extends BaseGestureDetector {
 
     //region Enum / Constants / Variables
 
-    private final static double FINGER_ANGLE_LIMIT_FOR_CLOSED_HAND = 0.3;
-    private final static double FINGER_ANGLE_LIMIT_FOR_OPEN_HAND = 0.3;
+    private final static double FINGER_ANGLE_LIMIT_FOR_CLOSED_HAND = 0.1;
+    private final static double FINGER_ANGLE_LIMIT_FOR_OPEN_HAND = 0.1;
 
     private final static long OPEN_CLOSE_GESTURE_DELAY = 1000;
 
-    private final static double ROLL_HAND_ANGLE_LIMIT = 0.3;
+    private final static double ROLL_HAND_ANGLE_LIMIT = 0.6;
 
     private boolean wasOpen;
     private boolean wasClose;
