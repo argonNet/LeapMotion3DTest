@@ -1,8 +1,6 @@
 package leapmotion3dtest.leapmotion.gestures;
 
-import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Finger;
-import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Hand;
 import javafx.geometry.Point3D;
 import leapmotion3dtest.leapmotion.gestures.information.PinchGestureInformation;
@@ -17,7 +15,9 @@ public class PinchGestureDetector extends BaseGestureDetector {
 
     private final static int INDEX_THUMB_TOUCH = 25;
 
-    private boolean rightIndexAndTumbClipped;
+    private final static double FINGER_ANGLE_LIMIT_FOR_OPEN_HAND = 0.3;
+
+    private boolean indexAndTumbClipped;
 
     //endregion
 
@@ -36,23 +36,25 @@ public class PinchGestureDetector extends BaseGestureDetector {
     @Override
     protected void onFrameRegistered(Hand selectedHand) {
         //Test index and thumb touch
-        Finger indexRight = selectedHand.fingers().fingerType(Finger.Type.TYPE_INDEX).get(0);
-        Finger thumbRight = selectedHand.fingers().fingerType(Finger.Type.TYPE_THUMB).get(0);
+        Finger index = selectedHand.fingers().fingerType(Finger.Type.TYPE_INDEX).get(0);
+        Finger thumb = selectedHand.fingers().fingerType(Finger.Type.TYPE_THUMB).get(0);
 
 
-        Point3D indexTipPos = new Point3D(indexRight.tipPosition().getX(), indexRight.tipPosition().getY(), indexRight.tipPosition().getZ());
-        Point3D thumbTipPos = new Point3D(thumbRight.tipPosition().getX(), thumbRight.tipPosition().getY(), thumbRight.tipPosition().getZ());
+        Point3D indexTipPos = new Point3D(index.tipPosition().getX(), index.tipPosition().getY(), index.tipPosition().getZ());
+        Point3D thumbTipPos = new Point3D(thumb.tipPosition().getX(), thumb.tipPosition().getY(), thumb.tipPosition().getZ());
 
-        boolean previousRightIndexAndTumbClipped = rightIndexAndTumbClipped;
-        rightIndexAndTumbClipped = indexRight.isValid() && thumbRight.isValid() && indexTipPos.distance(thumbTipPos) <= INDEX_THUMB_TOUCH;
+        boolean previousIndexAndTumbClipped = indexAndTumbClipped;
+        indexAndTumbClipped = index.isValid() && thumb.isValid() && indexTipPos.distance(thumbTipPos) <= INDEX_THUMB_TOUCH;
 
-        if(!previousRightIndexAndTumbClipped && rightIndexAndTumbClipped){
-            //Start clipping
-            listeners.forEach((x) -> x.gestureDetected(new PinchGestureInformation(true)));
-        }else if(previousRightIndexAndTumbClipped && !rightIndexAndTumbClipped){
-            //Stop clipping
-            listeners.forEach((x) -> x.gestureDetected(new PinchGestureInformation(false)));
-        }
+    if (!previousIndexAndTumbClipped && indexAndTumbClipped && selectedHand.grabAngle() < Math.PI - FINGER_ANGLE_LIMIT_FOR_OPEN_HAND)
+    {
+        //Start clipping
+        listeners.forEach((x) -> x.gestureDetected(new PinchGestureInformation(true)));
+    } else if (previousIndexAndTumbClipped && !indexAndTumbClipped) {
+        //Stop clipping
+        listeners.forEach((x) -> x.gestureDetected(new PinchGestureInformation(false)));
+    }
+
     }
 
     //endregion
